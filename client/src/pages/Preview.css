@@ -1,0 +1,304 @@
+.preview-page {
+  padding: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.export-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filename-input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 200px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.back-button {
+  background: #6c757d;
+}
+
+.back-button:hover {
+  background: #5a6268;
+}
+
+.exchange-container {
+  margin-bottom: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.exchange-header {
+  padding: 15px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exchange-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.exchange-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.exchange-total {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background: #f8f9fa;
+  font-weight: 500;
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.sortable:hover {
+  background: #e9ecef;
+}
+
+.text-right {
+  text-align: right;
+}
+
+tr:hover {
+  background: #f8f9fa;
+}
+
+.new-asset-row {
+  background-color: #f8f9fa;
+}
+
+.new-asset-row:hover {
+  background-color: #f8f9fa;
+}
+
+.new-asset-input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.new-asset-select {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  background-color: white;
+}
+
+.add-asset-button {
+  padding: 4px 12px;
+  font-size: 0.9em;
+  background-color: #28a745;
+}
+
+.add-asset-button:hover {
+  background-color: #218838;
+}
+
+.delete-icon {
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.delete-icon:hover {
+  color: #666;
+}
+
+.add-exchange-section {
+  margin-bottom: 20px;
+}
+
+.new-exchange-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.new-exchange-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.new-exchange-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.add-exchange-button {
+  background: #28a745;
+}
+
+.add-exchange-button:hover {
+  background: #218838;
+}
+
+.cancel-button {
+  background: #dc3545;
+}
+
+.cancel-button:hover {
+  background: #c82333;
+}
+
+input[placeholder="Optional"] {
+  border-color: #ddd;
+  background-color: #f8f9fa;
+  color: #666;
+}
+
+.zero-price-row {
+  background-color: #fff3f3;
+}
+
+.zero-price-row:hover {
+  background-color: #ffe9e9;
+}
+
+.price-input {
+  text-align: right;
+  width: 100px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  background: none;
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: #007bff;
+  background: white;
+}
+
+.editable-input {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.9em;
+  background: none;
+}
+
+.editable-input:hover {
+  border-color: #ddd;
+}
+
+.editable-input:focus {
+  outline: none;
+  border-color: #007bff;
+  background: white;
+}
+
+.action-column {
+  width: 40px;
+  padding: 0 !important;
+}
+
+.footer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.new-exchange-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
+}
+
+.export-button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.export-button:hover {
+  background: #218838;
+}
+
+.type-cell {
+  color: #666;
+  padding: 4px 8px;
+} 
