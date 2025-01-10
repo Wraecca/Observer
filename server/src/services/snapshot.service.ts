@@ -2,11 +2,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 interface CsvData {
-  symbol: string;
-  price: string;
-  exchange: string;
-  type: string;
-  amount: string;
+  Symbol: string;
+  Price: string;
+  Exchange: string;
+  Type: string;
+  Amount: string;
 }
 
 export class SnapshotService {
@@ -38,7 +38,7 @@ export class SnapshotService {
       .map(line => {
         const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
         return headers.reduce((obj: any, header, index) => {
-          obj[header.toLowerCase()] = values[index];
+          obj[header] = values[index];
           return obj;
         }, {});
       });

@@ -234,7 +234,9 @@ export const Preview: React.FC<PreviewProps> = ({ balances }) => {
           const staticBalances: ExchangeBalances = {};
           
           staticData.forEach(row => {
-            const { symbol, price, exchange, type, amount } = row;
+            const { Symbol: symbol, Price: price, Exchange: exchange, Type: type, Amount: amount } = row;
+            
+            if (!exchange || !symbol) return; // Skip if exchange or symbol is missing
             
             if (!staticBalances[exchange]) {
               staticBalances[exchange] = {
@@ -248,9 +250,14 @@ export const Preview: React.FC<PreviewProps> = ({ balances }) => {
               staticBalances[exchange].balances[type || 'spot'] = {};
             }
             
+            const numAmount = parseFloat(amount);
+            const numPrice = parseFloat(price);
+            
+            if (isNaN(numAmount) || isNaN(numPrice)) return; // Skip if amount or price is not a number
+            
             staticBalances[exchange].balances[type || 'spot'][symbol] = {
-              amount: parseFloat(amount),
-              price: parseFloat(price)
+              amount: numAmount,
+              price: numPrice
             };
           });
 
@@ -265,7 +272,9 @@ export const Preview: React.FC<PreviewProps> = ({ balances }) => {
                   mergedBalances[exchange].balances[type] = {};
                 }
                 Object.entries(assets).forEach(([symbol, balance]) => {
-                  mergedBalances[exchange].balances[type][symbol] = balance;
+                  if (balance && typeof balance === 'object' && 'amount' in balance && 'price' in balance) {
+                    mergedBalances[exchange].balances[type][symbol] = balance;
+                  }
                 });
               });
             }
@@ -274,7 +283,7 @@ export const Preview: React.FC<PreviewProps> = ({ balances }) => {
           const summaries: Record<string, ExchangeSummary> = {};
 
           for (const [exchange, exchangeData] of Object.entries(mergedBalances)) {
-            if (!exchangeData) continue;
+            if (!exchangeData || !exchangeData.balances) continue;
 
             summaries[exchange] = {
               name: exchange,
@@ -286,8 +295,9 @@ export const Preview: React.FC<PreviewProps> = ({ balances }) => {
               if (!assets) return;
 
               Object.entries(assets).forEach(([symbol, balance]) => {
-                if (!balance || typeof balance !== 'object') return;
-                const { amount, price } = balance as { amount: number; price: number };
+                if (!balance || typeof balance !== 'object' || !('amount' in balance) || !('price' in balance)) return;
+                
+                const { amount, price } = balance;
                 const value = amount * price;
 
                 const existingAssetIndex = summaries[exchange].assets.findIndex(

@@ -1,9 +1,9 @@
 export interface SnapshotData {
-  symbol: string;
-  price: string;
-  exchange: string;
-  type: string;
-  amount: string;
+  Symbol: string;
+  Price: string;
+  Exchange: string;
+  Type: string;
+  Amount: string;
 }
 
 export interface AssetData {

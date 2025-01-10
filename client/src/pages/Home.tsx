@@ -15,7 +15,6 @@ interface ExchangeData {
 
 interface GroupedAssets {
   [category: string]: AssetSummary[];
-  uncategorized: AssetSummary[];
 }
 
 export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
@@ -84,9 +83,9 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
     const summaryMap = new Map<string, AssetSummary>();
 
     for (const item of snapshotData) {
-      const symbol = item.symbol;
-      const price = parseFloat(item.price);
-      const amount = parseFloat(item.amount);
+      const symbol = item.Symbol;
+      const price = parseFloat(item.Price);
+      const amount = parseFloat(item.Amount);
       const value = price * amount;
 
       if (!summaryMap.has(symbol)) {
@@ -103,7 +102,7 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
       summary.totalAmount += amount;
       summary.totalValue += value;
       summary.exchanges.push({
-        name: item.exchange,
+        name: item.Exchange,
         amount,
         value,
         percentage: 0
@@ -121,32 +120,49 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
   }, [snapshotData]);
 
   const groupedAssets = useMemo(() => {
-    const grouped: GroupedAssets = {
+    const result: GroupedAssets = {
       uncategorized: []
     };
 
-    const categoryMap = new Map(assetCategories.map(asset => [asset.Symbol, asset.Category]));
+    const minValueNum = parseFloat(minValue);
 
-    for (const asset of assetSummaries) {
-      const category = categoryMap.get(asset.symbol) || 'uncategorized';
-      if (!grouped[category]) {
-        grouped[category] = [];
+    // Filter assets by minimum value
+    const filteredAssets = assetSummaries.filter(asset => asset.totalValue >= minValueNum);
+
+    // Sort assets based on current sort configuration
+    const sortedAssets = [...filteredAssets].sort((a, b) => {
+      const aValue = a[sortConfig.field];
+      const bValue = b[sortConfig.field];
+
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
       }
-      grouped[category].push(asset);
-    }
 
-    // Sort assets within each category
-    for (const category in grouped) {
-      grouped[category].sort((a, b) => {
-        const aValue = a[sortConfig.field];
-        const bValue = b[sortConfig.field];
-        const direction = sortConfig.direction === 'asc' ? 1 : -1;
-        return (aValue < bValue ? -1 : aValue > bValue ? 1 : 0) * direction;
-      });
-    }
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortConfig.direction === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
 
-    return grouped;
-  }, [assetSummaries, assetCategories, sortConfig]);
+      return 0;
+    });
+
+    // Group assets by category
+    sortedAssets.forEach(asset => {
+      const category = assetCategories.find(cat => cat.Symbol === asset.symbol)?.Category;
+      
+      if (category) {
+        if (!result[category]) {
+          result[category] = [];
+        }
+        result[category].push(asset);
+      } else {
+        result.uncategorized.push(asset);
+      }
+    });
+
+    return result;
+  }, [assetSummaries, assetCategories, minValue, sortConfig]);
 
   const categoryTotals = useMemo(() => {
     const totals: Record<string, number> = {};
