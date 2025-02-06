@@ -37,7 +37,7 @@ export const AssetCategoryModal: React.FC<AssetCategoryModalProps> = ({ isOpen, 
       const snapshotData = await client.getLatestSnapshot();
       console.log('Snapshot data:', snapshotData);
       
-      const uniqueSymbols = new Set(snapshotData.map(item => item.symbol));
+      const uniqueSymbols = new Set(snapshotData.map(item => item.Symbol));
       console.log('Unique symbols:', uniqueSymbols);
       
       // Merge with existing assets
