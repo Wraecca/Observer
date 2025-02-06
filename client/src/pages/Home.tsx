@@ -235,7 +235,21 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
 
   return (
     <div className="snapshots-page">
-      {snapshots.length > 0 && (
+      {snapshots.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-state-content">
+            <h2>No snapshots available</h2>
+            <p>Add your first snapshot to get started</p>
+            <button
+              onClick={onFetchBalances}
+              disabled={isLoading}
+              className="fetch-button"
+            >
+              {isLoading ? 'Loading...' : 'Add Snapshot'}
+            </button>
+          </div>
+        </div>
+      ) : (
         <div className="snapshot-section">
           <div className="snapshot-header">
             <div className="total-value">
@@ -390,20 +404,22 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
         </div>
       )}
 
-      <div className="footer">
-        <div className="filter-container">
-          <label className="min-value-label">
-            Hide assets below $
-            <input
-              type="text"
-              value={minValue}
-              onChange={(e) => setMinValue(e.target.value)}
-              className="min-value-input"
-              placeholder="1"
-            />
-          </label>
+      {snapshots.length > 0 && (
+        <div className="footer">
+          <div className="filter-container">
+            <label className="min-value-label">
+              Hide assets below $
+              <input
+                type="text"
+                value={minValue}
+                onChange={(e) => setMinValue(e.target.value)}
+                className="min-value-input"
+                placeholder="1"
+              />
+            </label>
+          </div>
         </div>
-      </div>
+      )}
 
       <AssetCategoryModal
         isOpen={showCategoryModal}
@@ -781,6 +797,30 @@ export const Home: React.FC<HomeProps> = ({ onFetchBalances, isLoading }) => {
           align-items: center;
           border-bottom: 1px solid #eee;
           background: #f8f9fa;
+        }
+
+        .empty-state {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 400px;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-state-content {
+          text-align: center;
+        }
+
+        .empty-state-content h2 {
+          color: #2c3e50;
+          margin-bottom: 8px;
+        }
+
+        .empty-state-content p {
+          color: #7f8c8d;
+          margin-bottom: 24px;
         }
       `}</style>
     </div>
